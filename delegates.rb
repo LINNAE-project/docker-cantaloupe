@@ -15,7 +15,6 @@ require 'java'
 java_import 'edu.illinois.library.cantaloupe.config.Configuration'
 
 class CustomDelegate
-
   ##
   # Attribute for the request context, which is a hash containing information
   # about the current request.
@@ -177,6 +176,10 @@ class CustomDelegate
   # @return See above.
   #
   def httpsource_resource_info(options = {})
+    config = Configuration.getInstance
+    prefix = config.getString("HttpSource.BasicLookupStrategy.url_prefix")
+    suffix = config.getString("HttpSource.BasicLookupStrategy.url_suffix")
+    prefix + context['identifier'].gsub(':', '/files/') + suffix
   end
 
   ##
